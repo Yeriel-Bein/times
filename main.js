@@ -2,7 +2,7 @@ const API_KEY = `cf14a883ebcc43a8a235a2ba6ae0e1c7`
 let newsList = []
 const getLatesnews = async()=>{
     const url = new URL(
-        `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
+        `https://times-yeriel.netlify.app/top-headlines?q=${keyword}&country=kr&pageSize=${PAGE_SIZE}`
     );
     const response =  await fetch(url);
     const data = await response.json(); // json은 파일 형식 중 하나이다. 파일의 확장자이다. 객체를 텍스트화한 타입이다.
