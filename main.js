@@ -1,5 +1,6 @@
 const API_KEY = `cf14a883ebcc43a8a235a2ba6ae0e1c7`
 let newsList = []
+
 const getLatesnews = async()=>{
     const url = new URL(
         `https://times-yeriel.netlify.app/top-headlines?`
