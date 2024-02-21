@@ -38,12 +38,12 @@ const getNewsByKeyword = async() =>{
     const keyword = document.getElementById("search-input").value;
     console.log("keyword", keyword);
     const url = new URL(
-        `https://times-yeriel.netlify.app/top-headlines?keyword=${keyword}`
+        `https://times-yeriel.netlify.app/top-headlines?q=${keyword}`
         // `https://newsapi.org/v2/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
     );
     const response = await fetch(url);
     const data = await response.json();
-    console.log("keyworld data:", data)
+    console.log("keyword data:", data)
     newsList = data.articles;
     render();
 };
