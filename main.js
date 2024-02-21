@@ -6,8 +6,8 @@ console.log("mmmm:", menus);
 
 const getLatestNews = async()=>{
     const url = new URL(
-        // "https://times-yeriel.netlify.app/top-headlines"
-        `https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}`
+        `https://times-yeriel.netlify.app/top-headlines`
+        // `https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}`
 
     );
     const response =  await fetch(url);
@@ -22,7 +22,8 @@ const getNewsByCategory = async(e) => {
     const category = e.target.textContent.toLowerCase();
     console.log("category:", category);
     const url = new URL(
-        `https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apiKey=${API_KEY}`
+        `https://times-yeriel.netlify.app/top-headlines?category=${category}`
+        // `https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apiKey=${API_KEY}`
     );
     const response = await fetch(url);
     const data = await response.json();
@@ -37,7 +38,8 @@ const getNewsByKeyword = async() =>{
     const keyword = document.getElementById("search-input").value;
     console.log("keyword", keyword);
     const url = new URL(
-        `https://newsapi.org/v2/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
+        `https://times-yeriel.netlify.app/top-headlines?keyword=${keyword}`
+        // `https://newsapi.org/v2/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
     );
     const response = await fetch(url);
     const data = await response.json();
