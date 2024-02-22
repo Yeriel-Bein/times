@@ -3,7 +3,6 @@ let newsList = []
 const menus = document.querySelectorAll(".menus button")
 menus.forEach(menu=>menu.addEventListener("click",(e)=>getNewsByCategory(e)))
 console.log("mmmm:", menus);
-
 const openNav = () => {
     document.getElementById("mySidenav").style.width = "250px";
 };
@@ -12,10 +11,21 @@ const closeNav = () => {
 };
 
 const getNews = async()=>{
-    const response = await fetch(url);
-    const data = await response.json();
-    newsList = data.articles; // json은 파일 형식 중 하나이다. 파일의 확장자이다. 객체를 텍스트화한 타입이다.
-    render();
+    try{const response = await fetch(url);
+        const data = await response.json();
+        if(response.status===200){
+            if(data.articles.length === 0){
+                throw new Error("No result for this search")
+            }
+            newsList = data.articles; // json은 파일 형식 중 하나이다. 파일의 확장자이다. 객체를 텍스트화한 타입이다.
+            render();
+        }else{
+            throw new Error(data.message);
+        }
+    }catch(error){
+        console.log("error", error.message);
+        errorRender(error.message);
+    }
 };
 
 const openSearchBox = () => {
@@ -53,7 +63,7 @@ const getNewsByCategory = async(e) => {
 const getNewsByKeyword = async() =>{
     const keyword = document.getElementById("search-input").value;
     console.log("keyword", keyword);
-    url = new URL(
+         url = new URL(
         `https://times-yeriel.netlify.app/top-headlines?q=${keyword}`
         // `https://newsapi.org/v2/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
     );
@@ -81,6 +91,16 @@ const render = ()=>{
     document.getElementById('news-board').innerHTML=newsHTML
 }
 
+const errorRender = (errorMessage) => {
+    const errorHTML= `<div class="alert alert-danger d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+    <div>
+    ${errorMessage}
+    </div>
+  </div>`;
+  document.getElementById("news-board").innerHTML = errorHTML;
+
+}
 
 getLatestNews();
 
