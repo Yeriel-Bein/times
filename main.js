@@ -4,48 +4,60 @@ const menus = document.querySelectorAll(".menus button")
 menus.forEach(menu=>menu.addEventListener("click",(e)=>getNewsByCategory(e)))
 console.log("mmmm:", menus);
 
+const openNav = () => {
+    document.getElementById("mySidenav").style.width = "250px";
+};
+const closeNav = () => {
+    document.getElementById("mySidenav").style.width = "0";
+};
+
+const getNews = async()=>{
+    const response = await fetch(url);
+    const data = await response.json();
+    newsList = data.articles; // json은 파일 형식 중 하나이다. 파일의 확장자이다. 객체를 텍스트화한 타입이다.
+    render();
+};
+
+const openSearchBox = () => {
+    let inputArea = document.getElementById("input-area");
+    if(inputArea.style.display === "inline"){
+        inputArea.style.display = "none";
+    }else{
+        inputArea.style.display = "inline"
+    }
+}
+
+let url = new URL(
+    `https://times-yeriel.netlify.app/top-headlines`
+    // `https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}`
+);
+
 const getLatestNews = async()=>{
-    const url = new URL(
+    url = new URL(
         `https://times-yeriel.netlify.app/top-headlines`
         // `https://newsapi.org/v2/top-headlines?country=kr&apiKey=${API_KEY}`
-
     );
-    const response =  await fetch(url);
-    const data = await response.json(); // json은 파일 형식 중 하나이다. 파일의 확장자이다. 객체를 텍스트화한 타입이다.
-    newsList = data.articles;
-    render();
-    console.log("dddd", newsList);
-
-}
+    getNews();
+};
 
 const getNewsByCategory = async(e) => {
     const category = e.target.textContent.toLowerCase();
     console.log("category:", category);
-    const url = new URL(
+    url = new URL(
         `https://times-yeriel.netlify.app/top-headlines?category=${category}`
         // `https://newsapi.org/v2/top-headlines?country=kr&category=${category}&apiKey=${API_KEY}`
     );
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log("ddd", data);
-    newsList = data.articles;
-
-    render();
-
-}
+    getNews();
+};
 
 const getNewsByKeyword = async() =>{
     const keyword = document.getElementById("search-input").value;
     console.log("keyword", keyword);
-    const url = new URL(
+    url = new URL(
         `https://times-yeriel.netlify.app/top-headlines?q=${keyword}`
         // `https://newsapi.org/v2/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
     );
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log("keyword data:", data)
-    newsList = data.articles;
-    render();
+    getNews();
 };
 
 const render = ()=>{
