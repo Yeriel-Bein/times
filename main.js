@@ -9,16 +9,27 @@ const openNav = () => {
 const closeNav = () => {
     document.getElementById("mySidenav").style.width = "0";
 };
+let totalResults = 0;
+let page = 1;
+const pageSize = 10;
+const groupSize = 5;
+
 
 const getNews = async()=>{
-    try{const response = await fetch(url);
+    try{
+        url.searchParams.set("page",page); // => &page=page
+        url.searchParams.set("pageSize", pageSize);
+        const response = await fetch(url);
         const data = await response.json();
+        console.log("ddd", data);
         if(response.status===200){
             if(data.articles.length === 0){
                 throw new Error("No result for this search")
             }
             newsList = data.articles; // json은 파일 형식 중 하나이다. 파일의 확장자이다. 객체를 텍스트화한 타입이다.
+            totalResults = data.totalResults
             render();
+            paginationRender();
         }else{
             throw new Error(data.message);
         }
@@ -100,6 +111,67 @@ const errorRender = (errorMessage) => {
   </div>`;
   document.getElementById("news-board").innerHTML = errorHTML;
 
+}
+
+const paginationRender=()=>{
+    //totalResult
+    //page
+    //pageSize
+    //groupSize
+    //totalpages
+    const totalPages = Math.ceil(totalResults / pageSize);
+    //pageGroup
+    const pageGroup = Math.ceil(page/groupSize);
+    //lastPage
+    // 마지막 페이지그룹이 그룹사이즈보다 작다? lastpage = totalpage
+    const lastPage = pageGroup * groupSize
+    if(lastPage > totalPages){
+        lastPage = totalPages;
+    }
+
+    //firstPage
+    //
+    const firstPage = 
+    lastPage - (groupSize - 1)<=0? 1: lastPage - (groupSize - 1); 
+
+    //first~last
+
+    let paginationHTML=`<a class="page-link" onclick = "moveToPage(${page-1})" aria-label="Previous">
+    <span aria-hidden="true">&laquo;</span></a>`
+
+    for(let i=firstPage;i<=lastPage;i++){
+        paginationHTML+=`<li class="page-item ${i===page?"active":""}" onclick="moveToPage(${i})"><a class="page-link">${i}</a></li>`
+    }
+    paginationHTML+=`<a class="page-link" onclick = "moveToPage(${page+1})" aria-label="Next">
+    <span aria-hidden="true">&raquo;</span>
+  </a>`
+    document.querySelector(".pagination").innerHTML = paginationHTML
+
+//     <nav aria-label="Page navigation example">
+//     <ul class="pagination">
+//       <li class="page-item">
+//         <a class="page-link" href="#" aria-label="Previous">
+//           <span aria-hidden="true">&laquo;</span>
+//         </a>
+//       </li>
+//       <li class="page-item"><a class="page-link" href="#">1</a></li>
+//       <li class="page-item"><a class="page-link" href="#">2</a></li>
+//       <li class="page-item"><a class="page-link" href="#">3</a></li>
+//       <li class="page-item">
+        // <a class="page-link" href="#" aria-label="Next">
+        //   <span aria-hidden="true">&raquo;</span>
+        // </a>
+//       </li>
+//     </ul>
+// </nav>
+
+    
+};
+
+const moveToPage = (pageNum) => {
+    console.log("moveToPage", pageNum);
+    page = pageNum;
+    getNews();
 }
 
 getLatestNews();

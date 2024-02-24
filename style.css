@@ -18,8 +18,6 @@ body{
     display:flex;
     justify-content: center;
     flex-wrap: wrap;
-    border-top:1px solid #ebebeb;
-    border-bottom: 4px double #000;
 }
 
 .side-menu{
@@ -54,6 +52,9 @@ body{
 
 .search{
     display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    vertical-align: middle;
 }
 
 .hamburger{
@@ -66,12 +67,30 @@ body{
     justify-content: space-between;
 }
 
-.input-area{
-    display:none;
-}
-
 #input-area{
     display: none;
+    margin: 0 12px 0 0;
+}
+
+.pagination{
+    justify-content: center;
+    padding: 8px;
+}
+
+.search-icon{
+    font-size: 24px;
+    margin: 0 12px;
+}
+
+.search-button{
+    border: none;
+    background-color: burlywood;
+    padding: 2.8px 8px;
+}
+
+.big-page-menus{
+    border-top:1px solid #ebebeb;
+    border-bottom: 4px double #000;
 }
 
 @media (max-width: 768px) {
