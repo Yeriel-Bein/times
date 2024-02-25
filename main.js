@@ -128,38 +128,47 @@ const paginationRender=()=>{
     if(lastPage > totalPages){
         lastPage = totalPages;
     }
-
-    //firstPage
-    //
+    
     const firstPage = 
     lastPage - (groupSize - 1)<=0? 1: lastPage - (groupSize - 1); 
+    
+     //firstPage
 
     //first~last
 
-    let paginationHTML=`<a class="page-link" onclick = "moveToPage(${page-1})" aria-label="Previous">
-    <span aria-hidden="true">&laquo;</span></a>`
+    let paginationHTML=``
 
+    if(firstPage >= 6){
+        paginationHTML = `<a class="page-link" onclick = "moveToPage(1)" aria-label="First-Page">
+        <span aria-hidden="true">&laquo;</span>
+      </a><a class="page-link" onclick = "moveToPage(${page-1})" aria-label="Previous">
+        <span aria-hidden="true">&lt;</span></a>`;
+    }
     for(let i=firstPage;i<=lastPage;i++){
         paginationHTML+=`<li class="page-item ${i===page?"active":""}" onclick="moveToPage(${i})"><a class="page-link">${i}</a></li>`
     }
-    paginationHTML+=`<a class="page-link" onclick = "moveToPage(${page+1})" aria-label="Next">
-    <span aria-hidden="true">&raquo;</span>
-  </a>`
+    if(lastPage<totalPages){
+        paginationHTML+=`<a class="page-link" onclick = "moveToPage(${page+1})" aria-label="Next">
+    <span aria-hidden="true">&gt;</span>
+  </a><a class="page-link" onclick = "moveToPage(${totalPages})"aria-label="Last-Page">
+  <span aria-hidden="true">&raquo;</span>
+</a>`
+    }
     document.querySelector(".pagination").innerHTML = paginationHTML
 
 //     <nav aria-label="Page navigation example">
 //     <ul class="pagination">
 //       <li class="page-item">
-//         <a class="page-link" href="#" aria-label="Previous">
-//           <span aria-hidden="true">&laquo;</span>
-//         </a>
+        // <a class="page-link" href="#" aria-label="Previous">
+        //   <span aria-hidden="true">&laquo;</span>
+        // </a>
 //       </li>
 //       <li class="page-item"><a class="page-link" href="#">1</a></li>
 //       <li class="page-item"><a class="page-link" href="#">2</a></li>
 //       <li class="page-item"><a class="page-link" href="#">3</a></li>
 //       <li class="page-item">
         // <a class="page-link" href="#" aria-label="Next">
-        //   <span aria-hidden="true">&raquo;</span>
+        // <span aria-hidden="true">&raquo;</span>
         // </a>
 //       </li>
 //     </ul>
@@ -173,6 +182,12 @@ const moveToPage = (pageNum) => {
     page = pageNum;
     getNews();
 }
+
+
+
+
+
+
 
 getLatestNews();
 

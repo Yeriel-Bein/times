@@ -93,6 +93,15 @@ body{
     border-bottom: 4px double #000;
 }
 
+.page-link{
+    color: burlywood;
+}
+
+.pagination-active{
+    background-color: burlywood;
+    color: white;
+}
+
 @media (max-width: 768px) {
 
     .side-menu-list button {
@@ -105,7 +114,9 @@ body{
     .hamburger{
         display:block;
     }
-
+    .big-page-menus{
+        border: 2px solid black;
+    }
     .big-page-menus button{
         display:none;
     }
